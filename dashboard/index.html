@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="kicker">TOKEN LAUNCH RADAR</p>
+    <h1>Protocols that record no token, ranked by what one would be worth</h1>
+    <p class="sub" id="meta">Loading the snapshot&hellip;</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel controls" aria-label="Filters">
+    <input id="q" type="search" placeholder="Search name or slug&hellip;" autocomplete="off">
+    <select id="cat" aria-label="Category"><option value="">All categories</option></select>
+    <select id="chain" aria-label="Chain"><option value="">All chains</option></select>
+    <select id="mintvl" aria-label="Minimum TVL">
+      <option value="0">Any TVL</option>
+      <option value="50000000">TVL $50M+</option>
+      <option value="100000000">TVL $100M+</option>
+      <option value="500000000">TVL $500M+</option>
+      <option value="1000000000">TVL $1B+</option>
+    </select>
+    <label class="check"><input id="watchonly" type="checkbox"> Watchlist only</label>
+    <button id="reset" type="button">Reset</button>
+  </section>
+
+  <p class="count" id="count"></p>
+
+  <section class="panel">
+    <table id="board">
+      <thead>
+        <tr>
+          <th data-sort="rank" class="num sorted">#</th>
+          <th data-sort="name">Protocol</th>
+          <th data-sort="category">Category</th>
+          <th data-sort="chains">Chains</th>
+          <th data-sort="tvl_usd" class="num">TVL</th>
+          <th data-sort="change_7d" class="num">7d</th>
+          <th data-sort="age_days" class="num">Age</th>
+          <th data-sort="implied_value_usd" class="num">Implied value</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="hint">Click a row for its detail view: the formula behind its implied value and its farm plan. Click a column header to sort.</p>
+  </section>
+
+  <section class="panel detail" id="detail" hidden>
+    <div class="detail-head">
+      <div>
+        <p class="kicker" id="d-badge"></p>
+        <h2 id="d-name"></h2>
+        <p class="muted" id="d-sub"></p>
+      </div>
+      <button id="d-close" type="button" aria-label="Close detail">&times;</button>
+    </div>
+    <div class="grid" id="d-stats"></div>
+    <h3>How the implied value is built</h3>
+    <ol class="formula" id="d-formula"></ol>
+    <p class="muted small" id="d-note"></p>
+    <h3>Farm plan</h3>
+    <ol class="steps" id="d-steps"></ol>
+  </section>
+
+  <section class="panel">
+    <h2>Already live: tokens that trade</h2>
+    <p class="muted">These protocols record a token, so the market prices them — the board never ranks them as pre-token. Shown by market cap, largest first.</p>
+    <table id="live">
+      <thead><tr><th>Protocol</th><th>Category</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">7d</th></tr></thead>
+      <tbody id="live-rows"></tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>How this radar works</h2>
+    <div id="method"></div>
+  </section>
+
+  <footer class="muted small">
+    <p>Every figure comes from the sealed snapshot (DefiLlama protocols data, one frozen fetch). A protocol is called pre-token only because the snapshot records no token for it — the record may miss one. Implied values are the model's own claim about what a token would be worth if one were issued and the protocol's record stayed as it is; they predict neither whether nor when a token is issued, and they are not price targets.</p>
+  </footer>
+</main>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
